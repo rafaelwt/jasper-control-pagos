@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ReportesApplication",
+            "request": "launch",
+            "mainClass": "com.reportes.jasper.ReportesApplication",
+            "projectName": "demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ReportesApplication",
+            "request": "launch",
+            "mainClass": "com.reportes.jasper.ReportesApplication",
+            "projectName": "demo"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DemoApplication<demo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.reportes.jasper.ReportesApplication",
+            "projectName": "demo",
+            "args": ""
+        }
+    ]
+}
