@@ -43,9 +43,9 @@ public class ReportsResource {
   // String url = "jdbc:postgresql://vps229753.vps.ovh.ca:5432/db_presupuesto";
   // String contrasena = "123456Zxcv";
 
-  String url = "jdbc:sqlserver://localhost:1433;database=db_controlpagos";
+  String url = "jdbc:sqlserver://192.168.10.223;database=db_controlpagos";
   // String contrasena = "postgres";
-  String contrasena = "123456Zxcv";
+  String contrasena = "Agroxxx2013";
 
   public ReportsResource() {
 
@@ -132,7 +132,7 @@ public class ReportsResource {
         JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
   
         HashMap params = new HashMap();
-        params.put("cod_usuario", cod_usuario);
+        params.put("cod_condicion_pago", cod_usuario);
         params.put("fecha_ini", fecha_ini);
         params.put("fecha_fin", fecha_fin);
   
@@ -175,7 +175,7 @@ public class ReportsResource {
   
   @CrossOrigin
   @GetMapping("/fechasposiblepago")
-  public void fechasposiblepago(HttpServletResponse response, @RequestParam Integer cod_usuario, @RequestParam String fecha_ini, @RequestParam String fecha_fin
+  public void fechasposiblepago(HttpServletResponse response, @RequestParam String fecha_ini, @RequestParam String fecha_fin
      ) throws Exception {
     try {
 
@@ -193,7 +193,6 @@ public class ReportsResource {
         JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
   
         HashMap params = new HashMap();
-        params.put("cod_usuario", cod_usuario);
         params.put("fecha_ini", fecha_ini);
         params.put("fecha_fin", fecha_fin);
   
