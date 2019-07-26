@@ -1,6 +1,5 @@
 package com.reportes.jasper.resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,12 +39,11 @@ import java.sql.Statement;
 @RestController
 @RequestMapping("/rest/reports")
 public class ReportsResource {
-  // String url = "jdbc:postgresql://vps229753.vps.ovh.ca:5432/db_presupuesto";
-  // String contrasena = "123456Zxcv";
+  String url = "jdbc:sqlserver://localhost\\MSSQLSERVER2008;database=db_controlpagos";
+  String contrasena = "123456Zxcv";
 
-  String url = "jdbc:sqlserver://192.168.10.223;database=db_controlpagos";
-  // String contrasena = "postgres";
-  String contrasena = "Agroxxx2013";
+  // String url = "jdbc:sqlserver://192.168.10.223;database=db_controlpagos";
+  // String contrasena = "Agroxxx2013";
 
   public ReportsResource() {
 
