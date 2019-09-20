@@ -39,11 +39,11 @@ import java.sql.Statement;
 @RestController
 @RequestMapping("/rest/reports")
 public class ReportsResource {
-  String url = "jdbc:sqlserver://localhost\\MSSQLSERVER2008;database=db_controlpagos";
-  String contrasena = "123456Zxcv";
+  // String url = "jdbc:sqlserver://localhost\\MSSQLSERVER2008;database=db_controlpagos";
+  // String contrasena = "123456Zxcv";
 
-  // String url = "jdbc:sqlserver://192.168.10.223;database=db_controlpagos";
-  // String contrasena = "Agroxxx2013";
+  String url = "jdbc:sqlserver://192.168.10.223;database=db_controlpagos";
+  String contrasena = "Agroxxx2013";
 
   public ReportsResource() {
 
@@ -66,6 +66,66 @@ public class ReportsResource {
       Statement statement = conn.createStatement();) {
         response.setContentType("application/pdf");
         InputStream inputStream = this.getClass().getResourceAsStream("/reports/rpt_llamada_por_usuario.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+  
+        HashMap params = new HashMap();
+        params.put("cod_usuario", cod_usuario);
+        params.put("fecha_ini", fecha_ini);
+        params.put("fecha_fin", fecha_fin);
+  
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+  
+        // JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null,
+        // conn);
+        JRPdfExporter exporter = new JRPdfExporter();
+  
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        // exporter.setExporterOutput(new
+        // SimpleOutputStreamExporterOutput("userReport.pdf")); //genera un pdf en la
+        // ruta raiz
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));
+        SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
+        reportConfig.setSizePageToContent(true);
+        reportConfig.setForceLineBreakPolicy(false);
+  
+        SimplePdfExporterConfiguration exportConfig = new SimplePdfExporterConfiguration();
+        exportConfig.setMetadataAuthor("baeldung");
+        exportConfig.setEncrypted(true);
+        exportConfig.setAllowedPermissionsHint("PRINTING");
+  
+        exporter.setConfiguration(reportConfig);
+        exporter.setConfiguration(exportConfig);
+  
+        exporter.exportReport();
+
+      }
+      catch (SQLException e) {
+      e.printStackTrace();
+      }
+
+    } catch (Exception exc) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al generar el reporte", null);
+    }
+
+  }
+
+  @CrossOrigin
+  @GetMapping("/totalllamadasporusuario")
+  public void totalllamadasporusuario(HttpServletResponse response, @RequestParam Integer cod_usuario, @RequestParam String fecha_ini, @RequestParam String fecha_fin
+     ) throws Exception {
+    try {
+
+      String connectionUrl =""+url+";"
+      + "user=sa;"
+      + "password="+contrasena+";"
+      // + "encrypt=true;"
+      + "trustServerCertificate=false;"
+      + "loginTimeout=30;";
+      
+      try (Connection conn = DriverManager.getConnection(connectionUrl);
+      Statement statement = conn.createStatement();) {
+        response.setContentType("application/pdf");
+        InputStream inputStream = this.getClass().getResourceAsStream("/reports/rpt_total_llamada_por_usuario.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
   
         HashMap params = new HashMap();
